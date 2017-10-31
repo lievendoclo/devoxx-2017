@@ -1,0 +1,44 @@
+image: gradle:alpine
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+stages:
+- static-analysis
+- test
+- build
+- release-image
+
+ktlint:
+  stage: static-analysis
+  script: ./gradlew ktlint
+
+detekt:
+  stage: static-analysis
+  script: ./gradlew detekt
+
+test:
+  stage: qa
+  script: ./gradlew --build-cache check
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+
+build:
+  stage: build
+  script: ./gradlew --build-cache assemble
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+
+release-image:
+  image: docker:latest
+  stage: release-image
+  script:
+  - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+  - ./gradlew --build-cache buildDocker
+  - docker push "sourcedbvba/project-kali-server:latest"
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+
