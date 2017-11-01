@@ -1,4 +1,4 @@
-image: gradle:alpine
+image: openjdk:jdk-alpine
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -11,7 +11,7 @@ stages:
 
 ktlint:
   stage: static-analysis
-  script: ./gradlew ktlint
+  script: ./gradlew ktlintCheck
 
 detekt:
   stage: static-analysis
