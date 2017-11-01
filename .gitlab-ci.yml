@@ -4,14 +4,9 @@ variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 stages:
-- static-analysis
 - qa
 - build
 - release-image
-
-ktlint:
-  stage: static-analysis
-  script: ./gradlew ktlintCheck
 
 test:
   stage: qa
