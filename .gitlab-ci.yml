@@ -46,7 +46,7 @@ docker-image-tags:
   - tags
 
 docker-image:
-  manual: true
+  when: manual
   image: docker:latest
   stage: docker
   dependencies:
