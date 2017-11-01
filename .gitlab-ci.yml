@@ -30,8 +30,10 @@ build:
 release-image:
   image: docker:latest
   stage: release-image
+  services:
+  - docker:dind
   script:
-  - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   - ./gradlew --build-cache buildDockerCiLatest
   - docker push "registry.gitlab.com/lievendoclo/project-kali-server:latest"
   cache:
