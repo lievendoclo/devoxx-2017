@@ -8,12 +8,12 @@ stages:
 - build
 - release-image
 
-test:
-  stage: qa
-  script: ./gradlew --build-cache check
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
+#test:
+#  stage: qa
+#  script: ./gradlew --build-cache check
+#  cache:
+#    key: "$CI_COMMIT_REF_NAME"
+#    policy: push
 
 build:
   stage: build
