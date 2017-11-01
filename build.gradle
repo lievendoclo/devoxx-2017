@@ -108,12 +108,12 @@ project(":main-partition") {
 		}
 	}
 
-	task buildDockerLatest(type: Docker, dependsOn: build, group: "build") {
+	task buildDockerCiLatest(type: Docker, dependsOn: build, group: "build") {
 		description = "Build Docker image."
 		applicationName = "project-kali-server"
 		dockerfile = file("Dockerfile")
 		tagVersion = "latest"
-		tag = "sourcedbvba/project-kali-server"
+		tag = "registry.gitlab.com/lievendoclo/project-kali-server"
 		doFirst {
 			copy {
 				from jar

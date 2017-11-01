@@ -36,8 +36,8 @@ release-image:
   stage: release-image
   script:
   - docker login -u "gitlab-ci-token" -p "$CI_JOB_TOKEN" $CI_REGISTRY
-  - ./gradlew --build-cache buildDocker
-  - docker push "sourcedbvba/project-kali-server:latest"
+  - ./gradlew --build-cache buildDockerCiLatest
+  - docker push "registry.gitlab.com/lievendoclo/project-kali-server:latest"
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
