@@ -16,12 +16,10 @@ buildscript {
 		classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.7"
 		classpath "com.github.ben-manes:gradle-versions-plugin:0.15.0"
 		classpath "org.owasp:dependency-check-gradle:2.1.1"
-		classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC3"
 		classpath "se.transmode.gradle:gradle-docker:1.2"
 		classpath "gradle.plugin.com.github.ksoichiro:gradle-build-info-plugin:0.2.0"
-		classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.0-RC3"
+		classpath "org.junit.platform:junit-platform-gradle-plugin:1.0.1"
 		classpath "gradle.plugin.org.jlleitschuh.gradle:ktlint-gradle:2.2.1"
-		classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.0.0.RC5-3"
 	}
 }
 
@@ -42,7 +40,6 @@ subprojects {
 	apply plugin: "io.spring.dependency-management"
 	apply plugin: "org.junit.platform.gradle.plugin"
 	apply plugin: "org.jlleitschuh.gradle.ktlint"
-	apply plugin: "io.gitlab.arturbosch.detekt"
 
 	sourceCompatibility = 1.8
 	targetCompatibility = 1.8
@@ -62,10 +59,6 @@ subprojects {
 		testCompile("junit:junit:4.12")
 		testRuntime("org.junit.vintage:junit-vintage-engine:4.12.0-RC2")
 		testCompile "org.assertj:assertj-core:3.6.1"
-	}
-
-	detekt {
-		version = "1.0.0.RC5-3"
 	}
 }
 
