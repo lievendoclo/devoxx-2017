@@ -25,12 +25,15 @@ buildscript {
 	}
 }
 
-subprojects {
+allprojects {
 	buildscript {
 		repositories {
 			jcenter()
 		}
 	}
+}
+
+subprojects {
 
 	apply plugin: "kotlin"
 	apply plugin: "io.spring.dependency-management"
