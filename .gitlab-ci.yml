@@ -4,27 +4,20 @@ variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 stages:
-#- qa
 - build
-- release-image
-
-#test:
-#  stage: qa
-#  script: ./gradlew --build-cache check
-#  cache:
-#    key: "$CI_COMMIT_REF_NAME"
-#    policy: push
+- docker
 
 build:
   stage: build
-  script: ./gradlew --build-cache assemble
+  script: ./gradlew build
   artifacts:
     paths:
     - main-partition/build/libs/*.jar
+    expire_in: 1 week
 
-release-image:
+docker-image-master:
   image: docker:latest
-  stage: release-image
+  stage: docker
   dependencies:
   - build
   services:
@@ -34,7 +27,37 @@ release-image:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server .
   - docker push $CI_REGISTRY/lievendoclo/project-kali-server:latest
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
+  only:
+  - master
 
+docker-image-tags:
+  image: docker:latest
+  stage: docker
+  dependencies:
+  - build
+  services:
+  - docker:dind
+  script:
+  - cd main-partition
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME .
+  - docker push $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME
+  only:
+  - tags
+
+docker-image:
+  manual: true
+  image: docker:latest
+  stage: docker
+  dependencies:
+  - build
+  services:
+  - docker:dind
+  script:
+  - cd main-partition
+  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME .
+  - docker push $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME
+  except:
+  - tags
+  - master
