@@ -25,6 +25,8 @@ build:
 release-image:
   image: docker:latest
   stage: release-image
+  dependencies:
+  - build
   services:
   - docker:dind
   script:
