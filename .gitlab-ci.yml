@@ -4,7 +4,7 @@ variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
 stages:
-- qa
+#- qa
 - build
 - release-image
 
@@ -29,8 +29,8 @@ release-image:
   - docker:dind
   script:
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-  - ./gradlew --build-cache buildDockerCiLatest
-  - docker push "registry.gitlab.com/lievendoclo/project-kali-server:latest"
+  - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server .
+  - docker push $CI_REGISTRY/lievendoclo/project-kali-server:latest
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: pull
