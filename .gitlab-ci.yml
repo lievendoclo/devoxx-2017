@@ -15,7 +15,7 @@ ktlint:
 
 detekt:
   stage: static-analysis
-  script: ./gradlew detekt
+  script: ./gradlew detektCheck
 
 test:
   stage: qa
