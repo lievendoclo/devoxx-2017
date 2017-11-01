@@ -28,6 +28,7 @@ release-image:
   services:
   - docker:dind
   script:
+  - cd main-partition
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
   - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server .
   - docker push $CI_REGISTRY/lievendoclo/project-kali-server:latest
