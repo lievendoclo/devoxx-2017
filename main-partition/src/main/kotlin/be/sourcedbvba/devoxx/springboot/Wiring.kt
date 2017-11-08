@@ -1,8 +1,8 @@
-package be.sourcedbvba.kali.springboot
+package be.sourcedbvba.devoxx.springboot
 
-import be.sourcedbvba.kali.persistence.PersistenceConfig
-import be.sourcedbvba.kali.usecase.UseCaseConfig
-import be.sourcedbvba.kali.web.WebConfig
+import be.sourcedbvba.devoxx.persistence.PersistenceConfig
+import be.sourcedbvba.devoxx.usecase.UseCaseConfig
+import be.sourcedbvba.devoxx.web.WebConfig
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 

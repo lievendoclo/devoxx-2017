@@ -1,6 +1,6 @@
-package be.sourcedbvba.kali.persistence.morphia
+package be.sourcedbvba.devoxx.persistence.morphia
 
-import be.sourcedbvba.kali.domain.entity.Product
+import be.sourcedbvba.devoxx.domain.entity.Product
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
@@ -10,3 +10,9 @@ data class ProductDocument(@Id val id: String? = null, val businessKey: String, 
         return Product(businessKey, name)
     }
 }
+
+fun Product.toNewDocument() : ProductDocument {
+    return ProductDocument(null, id, name);
+}
+
+

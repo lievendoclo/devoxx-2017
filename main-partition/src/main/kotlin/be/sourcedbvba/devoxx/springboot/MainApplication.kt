@@ -1,4 +1,4 @@
-package be.sourcedbvba.kali.springboot
+package be.sourcedbvba.devoxx.springboot
 
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication

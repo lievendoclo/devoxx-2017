@@ -1,6 +1,6 @@
-package be.sourcedbvba.kali.domain.gateway
+package be.sourcedbvba.devoxx.domain.gateway
 
-import be.sourcedbvba.kali.domain.entity.Product
+import be.sourcedbvba.devoxx.domain.entity.Product
 
 interface ProductGateway {
     fun findProducts(query: FindProductsQuery) : List<Product>

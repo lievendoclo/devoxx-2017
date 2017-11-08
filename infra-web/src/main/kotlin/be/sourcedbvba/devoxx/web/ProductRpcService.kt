@@ -1,9 +1,9 @@
-package be.sourcedbvba.kali.web
+package be.sourcedbvba.devoxx.web
 
-import be.sourcedbvba.kali.usecase.CreateProduct
-import be.sourcedbvba.kali.web.model.ProductJson
-import be.sourcedbvba.kali.web.model.toJsonList
-import be.sourcedbvba.kali.usecase.FindProducts
+import be.sourcedbvba.devoxx.usecase.CreateProduct
+import be.sourcedbvba.devoxx.web.model.ProductJson
+import be.sourcedbvba.devoxx.web.model.toJsonList
+import be.sourcedbvba.devoxx.usecase.FindProducts
 import com.googlecode.jsonrpc4j.JsonRpcService
 import org.springframework.stereotype.Component
 import org.springframework.web.bind.annotation.GetMapping

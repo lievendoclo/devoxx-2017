@@ -1,4 +1,4 @@
-package be.sourcedbvba.kali.persistence
+package be.sourcedbvba.devoxx.persistence
 
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration

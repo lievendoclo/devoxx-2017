@@ -1,4 +1,4 @@
-package be.sourcedbvba.kali.web
+package be.sourcedbvba.devoxx.web
 
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceExporter
 import org.springframework.context.annotation.Bean

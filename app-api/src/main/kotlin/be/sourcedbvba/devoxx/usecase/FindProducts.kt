@@ -1,4 +1,4 @@
-package be.sourcedbvba.kali.usecase
+package be.sourcedbvba.devoxx.usecase
 
 interface FindProducts {
     fun find(request: Request): Response

@@ -1,11 +1,11 @@
-package be.sourcedbvba.kali.persistence
+package be.sourcedbvba.devoxx.persistence
 
 import com.github.fakemongo.Fongo
 import com.mongodb.MongoClient
 import org.springframework.context.annotation.Bean
 import org.springframework.data.mongodb.core.MongoTemplate
 
-const val TEST_DATABASE_NAME = "kalitest"
+const val TEST_DATABASE_NAME = "devoxxtest"
 
 class PersistenceTestConfig : PersistenceConfig() {
     @Bean

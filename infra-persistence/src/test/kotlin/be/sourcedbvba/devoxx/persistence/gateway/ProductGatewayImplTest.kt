@@ -1,9 +1,9 @@
-package be.sourcedbvba.kali.persistence.gateway
+package be.sourcedbvba.devoxx.persistence.gateway
 
-import be.sourcedbvba.kali.domain.gateway.FindProductsQuery
-import be.sourcedbvba.kali.domain.gateway.ProductGateway
-import be.sourcedbvba.kali.persistence.PersistenceTestConfig
-import be.sourcedbvba.kali.persistence.morphia.ProductDocument
+import be.sourcedbvba.devoxx.domain.gateway.FindProductsQuery
+import be.sourcedbvba.devoxx.domain.gateway.ProductGateway
+import be.sourcedbvba.devoxx.persistence.PersistenceTestConfig
+import be.sourcedbvba.devoxx.persistence.morphia.ProductDocument
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

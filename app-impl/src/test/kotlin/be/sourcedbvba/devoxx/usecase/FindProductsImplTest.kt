@@ -1,8 +1,8 @@
-package be.sourcedbvba.kali.usecase
+package be.sourcedbvba.devoxx.usecase
 
-import be.sourcedbvba.kali.domain.ObjectMother.Companion.SALAD_PRODUCT_NAME
-import be.sourcedbvba.kali.domain.ObjectMother.Companion.salad
-import be.sourcedbvba.kali.domain.gateway.ProductGateway
+import be.sourcedbvba.devoxx.domain.ObjectMother.Companion.SALAD_PRODUCT_NAME
+import be.sourcedbvba.devoxx.domain.ObjectMother.Companion.salad
+import be.sourcedbvba.devoxx.domain.gateway.ProductGateway
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

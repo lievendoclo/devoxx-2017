@@ -1,6 +1,6 @@
-package be.sourcedbvba.kali.persistence.gateway
+package be.sourcedbvba.devoxx.persistence.gateway
 
-import be.sourcedbvba.kali.persistence.morphia.ProductDocument
+import be.sourcedbvba.devoxx.persistence.morphia.ProductDocument
 import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.data.repository.query.QueryByExampleExecutor
 

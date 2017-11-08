@@ -1,7 +1,7 @@
-package be.sourcedbvba.kali.usecase
+package be.sourcedbvba.devoxx.usecase
 
-import be.sourcedbvba.kali.domain.entity.Product
-import be.sourcedbvba.kali.domain.gateway.ProductGateway
+import be.sourcedbvba.devoxx.domain.entity.Product
+import be.sourcedbvba.devoxx.domain.gateway.ProductGateway
 import org.springframework.stereotype.Component
 import java.util.*
 

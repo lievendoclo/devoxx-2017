@@ -1,4 +1,4 @@
-image: openjdk:jdk
+image: openjdk:jdk-alpine
 
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
@@ -25,8 +25,8 @@ docker-image-master:
   script:
   - cd main-partition
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-  - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server .
-  - docker push $CI_REGISTRY/lievendoclo/project-kali-server:latest
+  - docker build -t $CI_REGISTRY_IMAGE .
+  - docker push $CI_REGISTRY_IMAGE:latest
   only:
   - master
 
@@ -40,8 +40,8 @@ docker-image-tags:
   script:
   - cd main-partition
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-  - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME .
-  - docker push $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME
+  - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+  - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   only:
   - tags
 
@@ -56,8 +56,8 @@ docker-image:
   script:
   - cd main-partition
   - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-  - docker build -t $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME .
-  - docker push $CI_REGISTRY/lievendoclo/project-kali-server:$CI_COMMIT_REF_NAME
+  - docker build -t $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME .
+  - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME
   except:
   - tags
   - master

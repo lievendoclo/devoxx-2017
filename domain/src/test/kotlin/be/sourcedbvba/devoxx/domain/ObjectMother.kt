@@ -1,6 +1,6 @@
-package be.sourcedbvba.kali.domain
+package be.sourcedbvba.devoxx.domain
 
-import be.sourcedbvba.kali.domain.entity.Product
+import be.sourcedbvba.devoxx.domain.entity.Product
 
 class ObjectMother {
     companion object {

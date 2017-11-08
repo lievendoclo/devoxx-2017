@@ -1,7 +1,7 @@
-package be.sourcedbvba.kali.web
+package be.sourcedbvba.devoxx.web
 
-import be.sourcedbvba.kali.usecase.*
-import be.sourcedbvba.kali.web.model.ProductJson
+import be.sourcedbvba.devoxx.usecase.*
+import be.sourcedbvba.devoxx.web.model.ProductJson
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.doReturn
