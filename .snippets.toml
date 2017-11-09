@@ -1,0 +1,193 @@
+jsonrpcinterface = '''
+const val PRODUCT_RPC_PATH = "/rpc/product"
+
+@JsonRpcService(PRODUCT_RPC_PATH)
+interface ProductRpcService {
+    fun findProducts(nameStartsWith: String?) : List<ProductJson>
+    fun createProduct(name: String): String
+}
+'''
+
+jsonrpcservice = '''
+@JsonRpcService(PRODUCT_RPC_PATH)
+@Component
+class ProductRpcServiceImpl(val findProducts: FindProducts,
+                            val createProduct: CreateProduct) : ProductRpcService {
+    override fun createProduct(name: String): String {
+        return createProduct.create(CreateProduct.Request(name)).id;
+    }
+
+    @GetMapping
+    override fun findProducts(nameStartsWith: String?) : List<ProductJson> {
+        return findProducts.find(FindProducts.Request(nameStartsWith))
+                .toJsonList()
+    }
+}
+'''
+
+jsonmodel = '''
+data class ProductJson(val id: String, val name: String)
+'''
+
+jsonmodelextension = '''
+fun FindProducts.Response.toJsonList() = products.map { ProductJson(it.id, it.name) }
+'''
+
+jsonrpctest = '''
+internal class ProductRpcServiceTest() {
+    val findProducts = mock(FindProducts::class.java)
+    val createProduct = mock(CreateProduct::class.java)
+
+    val productController = ProductRpcServiceImpl(findProducts, createProduct)
+
+    @Test
+    fun findProducts() {
+        doReturn(FindProducts.Response(listOf(FindProducts.Response.Product("1", "test"))))
+                .`when`(findProducts).find(FindProducts.Request("t"))
+
+        val result = productController.findProducts("t")
+
+        assertThat(result).contains(ProductJson("1", "test"))
+    }
+
+}
+'''
+
+mongodocument = '''
+@Document(collection = "product")
+data class ProductDocument(@Id val id: String? = null, val businessKey: String, val name: String) {
+    fun toDomain(): Product {
+        return Product(businessKey, name)
+    }
+}
+'''
+
+mongodocumentextension = '''
+fun Product.toNewDocument() : ProductDocument {
+    return ProductDocument(null, id, name);
+}
+'''
+
+mongorepository = '''
+interface ProductRepository : PagingAndSortingRepository<ProductDocument, String>, QueryByExampleExecutor<ProductDocument> {
+    fun findByNameContains(nameContains: String?)
+}
+'''
+
+mongogateway = '''
+@Component
+class ProductGatewayImpl(private val productRepository: ProductRepository) : ProductGateway {
+    override fun create(product: Product): String {
+        val saved = productRepository.save(product.toNewDocument())
+        return saved.businessKey
+    }
+
+    override fun findProducts(query: FindProductsQuery): List<Product> {
+        return productRepository.findByNameContains(query.nameContains).map { it.toDomain() }
+    }
+}
+'''
+
+mongoqbe = '''
+fun FindProductsQuery.toExample() : Example<ProductDocument> {
+    val exampleMatcher = ExampleMatcher.matchingAll()
+            .withIgnorePaths("id", "businessKey")
+            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING)
+    return Example.of(ProductDocument("", "", nameContains!!), exampleMatcher)
+}
+'''
+
+domainentity = '''
+data class Product(val id: String, val name: String)
+'''
+
+domaingateway = '''
+interface ProductGateway {
+    fun findProducts(query: FindProductsQuery) : List<Product>
+    fun create(product: Product): String
+}
+
+data class FindProductsQuery(val nameContains: String?)
+'''
+
+uccreate = '''
+interface CreateProduct {
+    fun create(request: Request) : Response
+
+    data class Request(val name: String)
+
+    data class Response(val id: String)
+}
+'''
+
+ucfind = '''
+interface FindProducts {
+    fun find(request: Request): Response
+
+    data class Request(val nameContains: String?)
+
+    data class Response(val products: List<Product>) {
+        data class Product(val id: String, val name: String)
+    }
+}
+'''
+
+ucicreate = '''
+@Component
+class CreateProductImpl(val productGateway: ProductGateway) : CreateProduct {
+
+    override fun create(request: CreateProduct.Request): CreateProduct.Response {
+        val id = productGateway.create(request.toDomain())
+        return CreateProduct.Response(id)
+    }
+}
+'''
+
+ucicreateext = '''
+fun CreateProduct.Request.toDomain() : Product {
+    return Product(UUID.randomUUID().toString(), name)
+}
+'''
+
+ucifind = '''
+@Component
+class FindProductsImpl(val productGateway: ProductGateway) : FindProducts {
+    override fun find(request: FindProducts.Request): FindProducts.Response {
+        val result = productGateway.findProducts(FindProductsQuery(request.nameContains))
+                .map { it.toUseCaseResponseModel() }
+        return FindProducts.Response(result)
+    }
+}
+'''
+
+ucifindext = '''
+fun Product.toUseCaseResponseModel() : FindProducts.Response.Product {
+    return FindProducts.Response.Product(id, name)
+}
+'''
+
+ucifindtest = '''
+internal class FindProductsImplTest
+@Autowired constructor(val productGateway: ProductGateway,
+                       val findProducts: FindProducts) : UseCaseTest() {
+    @Test
+    fun find() {
+        productGateway.create(salad())
+
+        val result = findProducts.find(FindProducts.Request(SALAD_PRODUCT_NAME))
+
+        assertThat(result.products).contains(salad().toUseCaseResponseModel())
+    }
+}
+'''
+
+mother = '''
+import be.sourcedbvba.devoxx.domain.entity.Product
+
+class ObjectMother {
+    companion object {
+        const val SALAD_PRODUCT_NAME = "salad"
+        fun salad() = Product("1", SALAD_PRODUCT_NAME)
+    }
+}
+'''
