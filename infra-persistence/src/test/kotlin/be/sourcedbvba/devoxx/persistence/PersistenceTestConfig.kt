@@ -1,7 +1,6 @@
 package be.sourcedbvba.devoxx.persistence
 
 import com.github.fakemongo.Fongo
-import com.mongodb.MongoClient
 import org.springframework.context.annotation.Bean
 import org.springframework.data.mongodb.core.MongoTemplate
 

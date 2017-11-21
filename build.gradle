@@ -4,6 +4,9 @@ buildscript {
     repositories {
         jcenter()
         maven {
+            url "https://repo.spring.io/milestone/"
+        }
+        maven {
             url "https://plugins.gradle.org/m2/"
         }
     }
@@ -11,7 +14,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
         classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlin_version"
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.5.7.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.M6")
         classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
         classpath "com.github.jengelman.gradle.plugins:shadow:1.2.4"
         classpath "gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.7"
@@ -29,22 +32,25 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
     apply plugin: "org.junit.platform.gradle.plugin"
 
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
+    sourceCompatibility = 1.9
+    targetCompatibility = 1.9
 
     configurations {
         testOutput.extendsFrom (testCompile)
     }
 
     repositories {
+        mavenLocal()
         jcenter()
+        maven {
+            url "https://repo.spring.io/milestone/"
+        }
         maven { url 'https://jitpack.io' }
     }
 
     dependencyManagement {
         imports {
-            // keep this in sync with the spring boot gradle plugin
-            mavenBom "io.spring.platform:platform-bom:Brussels-SR5"
+            mavenBom 'org.springframework.data:spring-data-releasetrain:Kay-SR1'
         }
     }
 
@@ -58,15 +64,15 @@ subprojects {
     }
 
     dependencies {
-        compile "org.jetbrains.kotlin:kotlin-stdlib-jre8"
-        compile "com.google.code.findbugs:jsr305:3.0.1"
+//        compile "org.jetbrains.kotlin:kotlin-stdlib"
+        compile "org.jetbrains.kotlin:kotlin-reflect"
 
-        compile "org.springframework.boot:spring-boot"
-        compile "org.springframework.boot:spring-boot-starter-logging"
+        compile "org.springframework.boot:spring-boot:2.0.0.M6"
+        compile "org.springframework.boot:spring-boot-starter-logging:2.0.0.M6"
 
         testCompile("org.junit.jupiter:junit-jupiter-api:5.0.1")
         testCompile "com.github.sbrannen:spring-test-junit5:1.0.0"
-        testCompile "org.springframework.boot:spring-boot-starter-test"
+        testCompile "org.springframework.boot:spring-boot-starter-test:2.0.0.M6"
         testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.1")
         testRuntime("org.junit.platform:junit-platform-launcher:1.0.1")
     }
@@ -84,13 +90,13 @@ project(":main-partition") {
         compile project(":infra-web")
         compile project(":infra-persistence")
 
-        compile("org.springframework.boot:spring-boot-starter-web") {
+        compile("org.springframework.boot:spring-boot-starter-web:2.0.0.M6") {
             exclude module: "spring-boot-starter-tomcat"
         }
-        compile("org.springframework.boot:spring-boot-starter-data-mongodb")
-        compile "org.springframework.boot:spring-boot-starter-undertow"
-        compile "org.springframework.boot:spring-boot-actuator"
-
+        compile("org.springframework.boot:spring-boot-starter-undertow:2.0.0.M6") {
+            exclude module: "jboss-annotations-api_1.2_spec"
+        }
+        compile "org.springframework.boot:spring-boot-actuator:2.0.0.M6"
         testCompile "com.jayway.restassured:spring-mock-mvc:2.9.0"
     }
 
@@ -147,7 +153,7 @@ project("infra-persistence") {
 project("infra-web") {
     dependencies {
         compile project(":app-api")
-        compile "org.springframework:spring-web"
+        compile "org.springframework:spring-web:5.0.1.RELEASE"
         compile "com.github.briandilley.jsonrpc4j:jsonrpc4j:1.2.0"
     }
 }
